@@ -1,0 +1,89 @@
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Courses and Edit Timetable</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px; /* Adds some space between tables */
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+
+        .timetable {
+            flex: 1;
+            width: 800px;
+            margin: 10px;
+        }
+
+        .subject {
+            color: darkblue;
+        }
+
+        .staff {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Select Courses </h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.courses }}
+            <button type="submit" name="generate" class="btn btn-outline-secondary">Generate Timetable</button>
+        </form>
+    </div>
+
+   {% if timetable_data %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="timetable-container">
+            {% for course_name, timetable in timetable_data.items %}
+                <div class="timetable">
+                    <h3>Timetable for {{ course_name }} </h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Days</th>
+                                <th>Period 1 (9-10 AM)</th>
+                                <th>Period 2 (10-11 AM)</th>
+                                <th>Period 3 (11-12 PM)</th>
+                                <th>Period 4 (12-1 PM)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for day, periods in timetable.items %}
+                                <tr>
+                                    <td>{{ day }}</td>
+                                    {% for period in periods %}
+                                        <td>
+                                            {% if period and period.0 != 'NIL' %}
+                                                <input type="text" name="subject_staff_{{ course_name }}_{{ day }}_{{ forloop.counter0 }}" value="{{ period.0.subject_name }} ({{ period.1.staff_name }})" class="subject"/>
+                                            {% else %}
+                                                NIL
+                                            {% endif %}
+                                        </td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endfor %}
+        </div>
+
+
+    </form>
+{% endif %}
+</body>
+</html>
+{% endblock %}

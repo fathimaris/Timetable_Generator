@@ -1,0 +1,103 @@
+{% extends 'index.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
+    }
+    h1 {
+        text-align: center;
+        color: Darkgreen;
+        margin-top: 30px;
+        font-weight: bold;
+    }
+    .btn-add {
+        color:darkgreen;
+        border-color: darkgreen;
+        display: block;
+        width: fit-content;
+        margin: 20px auto;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+    .btn-add:hover {
+        background-color: #218838;
+    }
+    .table-container {
+        width: 90%;
+        max-width: 1000px;
+        margin: 30px auto;
+        padding: 20px;
+        background-color: #1b5e20;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    }
+    .table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+        border:1px solid #ffff;
+    }
+    th, td {
+        padding: 12px;
+        border: 1px solid #155724;
+        text-align: center;
+        color: white;
+    }
+    th {
+        background-color: #155724; /* Dark green for header */
+    }
+    td {
+        background-color: #1b5e20; /* Dark green for table cells */
+    }
+    td i {
+        color: #ffffff;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+    td i:hover {
+        color: #c8e6c9; /* Lighter green on hover */
+    }
+</style>
+
+<div class="container">
+    <h1>SELECT SUBJECTS</h1>
+    <a href="{% url 'create_subject' %}" class="btn btn-add">ADD SUBJECT</a>
+
+    <div class="table-container">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Course Name</th>
+                    <th scope="col">Subjects</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% regroup data by Course as grouped_subjects %}
+                {% for course_group in grouped_subjects %}
+                    <tr>
+                        <td>{{ course_group.grouper.name }}</td>
+                        <td>
+                            {% for subject in course_group.list %}
+                                {{ subject.subject_name }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <a href="{% url 'update_subject' course_group.list.0.id %}"><i class="bi bi-pencil-square"></i></a> |
+                            <a href="{% url 'delete_subject' course_group.list.0.id %}"><i class="bi bi-trash3"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

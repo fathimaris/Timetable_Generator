@@ -1,0 +1,62 @@
+{% extends 'index.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0; /* Light gray background for contrast */
+    }
+
+    .card {
+        width: 20rem; /* Card width */
+        margin: 100px auto; /* Center the card */
+        border: 1px solid #28a745; /* Dark green border */
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    }
+
+    .card-body {
+        background-color: #ffffff; /* White background for card body */
+        padding: 20px;
+        border-radius: 10px; /* Match card corners */
+    }
+
+    .card-title {
+        text-align: center; /* Center the title */
+        color: #155724; /* Dark green for the title */
+        font-weight: bold;
+        margin-bottom: 20px; /* Space below title */
+    }
+
+    .btn-primary {
+        background-color: #28a745; /* Dark green for button */
+        border: none; /* Remove border */
+        color: white; /* White text */
+        width: 100%; /* Full width */
+        padding: 10px; /* Padding for button */
+        font-size: 16px; /* Font size */
+        transition: background-color 0.3s ease; /* Smooth transition */
+    }
+
+    .btn-primary:hover {
+        background-color: #218838; /* Darker green on hover */
+    }
+
+    .form-group label {
+        color: #155724; /* Dark green for labels */
+    }
+</style>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">ADD STAFF</h5>
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

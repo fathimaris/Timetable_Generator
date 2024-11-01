@@ -1,0 +1,111 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #d0f0c0; /* Light green for background */
+        color: #004d00; /* Dark green for text */
+    }
+    h1 {
+        text-align: center;
+        color: #004d00; /* Dark green color for heading */
+        margin-top: 30px;
+        font-weight: bold;
+    }
+    .btn-outline-secondary {
+        color: #004d00;
+        border-color: #004d00;
+        margin-bottom: 20px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        text-decoration: none; /* Remove underline */
+    }
+    a{
+    text-decoration:none;
+    }
+    a:hover{
+     text-decoration:none;}
+
+    .btn-outline-secondary:hover {
+        background-color: #004d00;
+        color: white;
+
+    }
+    .table-container {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 10px;
+    }
+    .table {
+        width: 100%;
+        margin-top: 30px;
+        background-color: #004d00; /* Dark green color for table background */
+        border-collapse: collapse;
+    }
+    th {
+        background-color: #004d00;
+        color: white;
+        text-align: center;
+        padding: 10px;
+    }
+    td {
+        text-align: center;
+        padding: 8px;
+        color: #fff; /* Dark green text for table data */
+    }
+    td a {
+        color: #004d00; /* Dark green for icons */
+    }
+    td a:hover {
+        color: #006600;
+    }
+    i{
+    color:#ffff;
+    }
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .table-container {
+            padding: 0 10px;
+        }
+        h1 {
+            font-size: 28px;
+        }
+    }
+</style>
+
+<div class="container">
+    <h1>SELECT COURSES</h1>
+
+    <a href="{% url 'create_course' %}"><button class="btn btn-outline-secondary">ADD COURSE</button></a>
+
+    <div class="table-container">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">SI NO</th>
+                    <th scope="col">NAME</th>
+                    <th scope="col">UPDATE</th>
+                    <th scope="col">DELETE</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in data %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.name }}</td>
+                    <td><a href="{% url 'update_course' i.id %}"><i class="bi bi-pencil-square"></i></a></td>
+                    <td><a href="{% url 'delete_course' i.id %}"><i class="bi bi-trash3"></i></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

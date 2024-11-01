@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>TIMETABLE GENERATOR</title>
+    <style>
+        *{
+           font-family:'Georgia';
+           }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            margin: 0;
+
+
+        }
+        .sidebar {
+            min-width: 200px;
+            background-color: #004d00;
+            color: white;
+            flex-shrink: 0;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            MARGIN-TOP: 45px;
+        }
+        .sidebar a:hover {
+            background-color: #003300;
+            color: White;
+        }
+        .sidebar .nav-link.active {
+            background-color: #006400;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #ECFFDC;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                min-width: 100%;
+                padding: 10px;
+                text-align: center;
+            }
+            .sidebar a {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar p-3">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'Homepage' %}">HOME</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'Courses' %}">COURSES</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'Subjects' %}">SUBJECTS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'Staffs' %}">STAFF</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'generate_timetable' %}">TIMETABLE</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="content p-4">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
